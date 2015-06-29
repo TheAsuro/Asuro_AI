@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Asuro_AI", "Asuro_AI\Asuro_
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platformer_AI_Test", "Platformer_AI_Test\Platformer_AI_Test.csproj", "{2C656757-5187-4286-BE21-54C9FA155F18}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platformer_AI", "Platformer_AI\Platformer_AI.csproj", "{BDB14102-7801-46E9-9859-A4B45CB70CE5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2C656757-5187-4286-BE21-54C9FA155F18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C656757-5187-4286-BE21-54C9FA155F18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C656757-5187-4286-BE21-54C9FA155F18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDB14102-7801-46E9-9859-A4B45CB70CE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDB14102-7801-46E9-9859-A4B45CB70CE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDB14102-7801-46E9-9859-A4B45CB70CE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDB14102-7801-46E9-9859-A4B45CB70CE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

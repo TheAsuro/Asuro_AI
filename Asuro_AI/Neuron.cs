@@ -39,11 +39,7 @@ namespace Asuro_AI
             inputs.ForEach(
                 (Neuron n) =>
                 {
-                    if (checkedNeurons.Contains(n))
-                    {
-
-                    }
-                    else if (n.IsActive)
+                    if (!checkedNeurons.Contains(n) && n.IsActive)
                     {
                         activeInputs++;
                     }

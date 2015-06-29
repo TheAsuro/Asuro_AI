@@ -7,16 +7,20 @@ namespace Asuro_AI
 {
     public class NeuralNetwork
     {
+        public delegate InputNeuron CreateInputNeuron();
+
+        private CreateInputNeuron createRandomInput;
         private Ruleset rules = new Ruleset();
         private Random rng;
         private int minMutations;
         private int maxMutations;
 
-        public NeuralNetwork(int seed, int minMutations = 0, int maxMutations = 5)
+        public NeuralNetwork(int seed, CreateInputNeuron randomInput, int minMutations = 0, int maxMutations = 5)
         {
             rng = new Random(seed);
             this.minMutations = minMutations;
             this.maxMutations = maxMutations;
+            createRandomInput = randomInput;
         }
 
         public void AddNeuron(Neuron newNeuron)
@@ -37,10 +41,11 @@ namespace Asuro_AI
         private void Mutate()
         {
             int type = rng.Next(0, 100);
+            Console.WriteLine("Typ: " + type);
 
             if (type > 90)
             {
-                // Add new neuron
+                AddRandomNeuron();
             }
             else if (type > 85)
             {
@@ -53,6 +58,41 @@ namespace Asuro_AI
             else
             {
                 // Remove connection
+            }
+        }
+
+        private Neuron GetRandomNeuron()
+        {
+            return rules.Neurons[rng.Next(0, rules.Neurons.Length - 1)];
+        }
+
+        private void AddRandomNeuron()
+        {
+            // Create neuron or InputNeuron
+            Neuron n;
+            int neuronType = rng.Next(0, 1);
+
+            if (neuronType == 0)
+            {
+                n = new Neuron();
+            }
+            else
+            {
+                n = createRandomInput();
+            }
+
+            // Get random other neuron in network
+            Neuron other = null;
+            if (rules.Neurons.Length > 0)
+                other = GetRandomNeuron();
+
+            // Add neuron to network
+            rules.AddNeuron(n);
+
+            // Connect it to the other neuron
+            if (other != null)
+            {
+                n.AddInput(other);
             }
         }
 
