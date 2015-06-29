@@ -8,10 +8,52 @@ namespace Asuro_AI
     public class NeuralNetwork
     {
         private Ruleset rules = new Ruleset();
+        private Random rng;
+        private int minMutations;
+        private int maxMutations;
+
+        public NeuralNetwork(int seed, int minMutations = 0, int maxMutations = 5)
+        {
+            rng = new Random(seed);
+            this.minMutations = minMutations;
+            this.maxMutations = maxMutations;
+        }
 
         public void AddNeuron(Neuron newNeuron)
         {
             rules.AddNeuron(newNeuron);
+        }
+
+        public void MutateNetwork()
+        {
+            // Do a random number of mutations
+            int mutationCount = rng.Next(minMutations, maxMutations);
+            for (int i = 0; i < mutationCount; i++)
+            {
+                Mutate();
+            }
+        }
+
+        private void Mutate()
+        {
+            int type = rng.Next(0, 100);
+
+            if (type > 90)
+            {
+                // Add new neuron
+            }
+            else if (type > 85)
+            {
+                // Remove neuron
+            }
+            else if (type > 20)
+            {
+                // Add connection
+            }
+            else
+            {
+                // Remove connection
+            }
         }
 
         public void ApplyObservations(Observation[] observations)
