@@ -20,6 +20,11 @@ namespace Asuro_AI
             inputs.Add(inputNeuron);
         }
 
+        public void RemoveInputAt(int index)
+        {
+            inputs.RemoveAt(index);
+        }
+
         public virtual bool IsActive
         {
             get

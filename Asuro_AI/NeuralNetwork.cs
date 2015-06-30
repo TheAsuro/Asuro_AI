@@ -49,21 +49,24 @@ namespace Asuro_AI
             }
             else if (type > 85)
             {
-                // Remove neuron
+                RemoveRandomNeuron();
             }
             else if (type > 20)
             {
-                // Add connection
+                CreateRandomConnection();
             }
             else
             {
-                // Remove connection
+                RemoveRandomConnection();
             }
         }
 
         private Neuron GetRandomNeuron()
         {
-            return rules.Neurons[rng.Next(0, rules.Neurons.Length - 1)];
+            if (rules.Neurons.Length > 0)
+                return rules.Neurons[rng.Next(0, rules.Neurons.Length - 1)];
+            else
+                return null;
         }
 
         private void AddRandomNeuron()
@@ -93,6 +96,57 @@ namespace Asuro_AI
             if (other != null)
             {
                 n.AddInput(other);
+            }
+        }
+
+        private void RemoveRandomNeuron()
+        {
+            Neuron n = GetRandomNeuron();
+            
+            if (n != null)
+            {
+                
+            }
+            else
+            {
+                // Not enough neurons
+            }
+        }
+
+        private void CreateRandomConnection()
+        {
+            if (rules.Neurons.Length > 1)
+            {
+                Neuron a = GetRandomNeuron();
+                Neuron b = GetRandomNeuron();
+                a.AddInput(b);
+            }
+            else
+            {
+                // Not enough neurons
+            }
+        }
+
+        private void RemoveRandomConnection()
+        {
+            if (rules.Neurons.Length > 1)
+            {
+                bool foundNode = false;
+
+                while (!foundNode)
+                {
+                    Neuron n = GetRandomNeuron();
+                    if (n.Inputs.Length > 0)
+                    {
+                        int connectionIndex = rng.Next(0, n.Inputs.Length - 1);
+                        n.RemoveInputAt(connectionIndex);
+                        foundNode = true;
+                    }
+                }
+            }
+            else
+            {
+                // Not enough neurons
             }
         }
 
@@ -171,6 +225,22 @@ namespace Asuro_AI
             }
 
             allNeurons.Add(neuron);
+        }
+
+        public void RemoveNeuron(Neuron neuron)
+        {
+            if (!allNeurons.Contains(neuron))
+            {
+                throw new InvalidOperationException("Neuron to remove doesn't exist!");
+            }
+            else
+            {
+                allNeurons.Remove(neuron);
+                if (inputs.Contains(neuron))
+                    inputs.Remove((InputNeuron)neuron);
+                if (outputs.Contains(neuron))
+                    outputs.Remove((OutputNeuron)neuron);
+            }
         }
     }
 }
