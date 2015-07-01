@@ -29,8 +29,9 @@
         private void InitializeComponent()
         {
             this.gamePanel = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.bnMutate = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.bnAdvance = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // gamePanel
@@ -40,34 +41,51 @@
             this.gamePanel.Size = new System.Drawing.Size(350, 250);
             this.gamePanel.TabIndex = 0;
             // 
-            // button1
+            // bnMutate
             // 
-            this.button1.Location = new System.Drawing.Point(356, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Test";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.bnMutate.Location = new System.Drawing.Point(356, 3);
+            this.bnMutate.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.bnMutate.Name = "bnMutate";
+            this.bnMutate.Size = new System.Drawing.Size(202, 23);
+            this.bnMutate.TabIndex = 1;
+            this.bnMutate.Text = "Mutate";
+            this.bnMutate.UseVisualStyleBackColor = true;
+            this.bnMutate.Click += new System.EventHandler(this.bnMutate_Click);
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(356, 41);
+            this.textBox1.Location = new System.Drawing.Point(356, 70);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(0);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(196, 199);
+            this.textBox1.Size = new System.Drawing.Size(202, 180);
             this.textBox1.TabIndex = 2;
+            // 
+            // bnAdvance
+            // 
+            this.bnAdvance.Location = new System.Drawing.Point(356, 29);
+            this.bnAdvance.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
+            this.bnAdvance.Name = "bnAdvance";
+            this.bnAdvance.Size = new System.Drawing.Size(202, 23);
+            this.bnAdvance.TabIndex = 3;
+            this.bnAdvance.Text = ">>";
+            this.bnAdvance.UseVisualStyleBackColor = true;
+            this.bnAdvance.Click += new System.EventHandler(this.bnAdvance_Click);
             // 
             // GameDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(564, 252);
+            this.Controls.Add(this.bnAdvance);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.bnMutate);
             this.Controls.Add(this.gamePanel);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "GameDisplay";
-            this.Text = "Form1";
+            this.Text = "sick gaem";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.GameDisplay_Paint);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -77,8 +95,9 @@
         #endregion
 
         private System.Windows.Forms.Panel gamePanel;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button bnMutate;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button bnAdvance;
     }
 }
 

@@ -36,22 +36,30 @@ namespace Asuro_AI
             {
                 Mutate();
             }
+
+            // TEMP
+            int counter = 0;
+
+            foreach (Neuron n in rules.Neurons)
+                foreach (Neuron connection in n.Inputs)
+                    counter++;
+
+            Console.WriteLine("Neurons: " + rules.Neurons.Length + " (I:" + rules.Inputs.Length + " O:" + rules.Outputs.Length + ")\nConnections: " + counter + "\n-----");
         }
 
         private void Mutate()
         {
             int type = rng.Next(0, 100);
-            Console.WriteLine("Typ: " + type);
 
-            if (type > 90)
+            if (type > 95)
             {
                 AddRandomNeuron();
             }
-            else if (type > 85)
+            else if (type > 45)
             {
                 RemoveRandomNeuron();
             }
-            else if (type > 20)
+            else if (type > 25)
             {
                 CreateRandomConnection();
             }
@@ -73,9 +81,9 @@ namespace Asuro_AI
         {
             // Create neuron or InputNeuron
             Neuron n;
-            int neuronType = rng.Next(0, 1);
+            int neuronType = rng.Next(0, 100);
 
-            if (neuronType == 0)
+            if (neuronType > 50)
             {
                 n = new Neuron();
             }
@@ -129,11 +137,12 @@ namespace Asuro_AI
 
         private void RemoveRandomConnection()
         {
-            if (rules.Neurons.Length > 1)
+            if (rules.Neurons.Length - rules.Outputs.Length > 1)
             {
                 bool foundNode = false;
+                int counter = 0;
 
-                while (!foundNode)
+                while (!foundNode && counter < rules.Neurons.Length)
                 {
                     Neuron n = GetRandomNeuron();
                     if (n.Inputs.Length > 0)
@@ -142,6 +151,8 @@ namespace Asuro_AI
                         n.RemoveInputAt(connectionIndex);
                         foundNode = true;
                     }
+
+                    counter++;
                 }
             }
             else
@@ -215,11 +226,11 @@ namespace Asuro_AI
 
         public void AddNeuron(Neuron neuron)
         {
-            if (neuron.GetType() == typeof(InputNeuron))
+            if (neuron.GetType() == typeof(InputNeuron) || neuron.GetType().IsSubclassOf(typeof(InputNeuron)))
             {
                 inputs.Add((InputNeuron)neuron);
             }
-            else if (neuron.GetType() == typeof(OutputNeuron))
+            else if (neuron.GetType() == typeof(OutputNeuron) || neuron.GetType().IsSubclassOf(typeof(OutputNeuron)))
             {
                 outputs.Add((OutputNeuron)neuron);
             }

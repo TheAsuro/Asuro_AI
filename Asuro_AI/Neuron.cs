@@ -13,7 +13,7 @@ namespace Asuro_AI
         private List<Neuron> inputs = new List<Neuron>();
         public Neuron[] Inputs { get { return inputs.ToArray(); } }
 
-        private float barrier = 0.5f;
+        private float barrier = 0.1f;
 
         public void AddInput(Neuron inputNeuron)
         {
