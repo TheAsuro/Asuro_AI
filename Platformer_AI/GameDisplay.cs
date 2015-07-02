@@ -19,6 +19,9 @@ namespace Platformer_AI
         private int leftCameraBound = 0;
         private int BlockWidth { get { return gamePanel.Width / width; } }
         private int BlockHeight { get { return gamePanel.Height / height; } }
+        private bool leftPressed;
+        private bool rightPressed;
+        private bool upPressed;
 
         private NeuralNetwork network;
 
@@ -29,18 +32,18 @@ namespace Platformer_AI
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
             level = new Level(42);
-            network = new NeuralNetwork(new Random().Next(), () => GetRandomInputNeuron(), 1, 10);
+            network = new NeuralNetwork(42, () => GetRandomInputNeuron(), 1, 10);
 
             OutputNeuron left = new OutputNeuron();
-            left.OutputEvent += (sender, args) => level.MovePlayer(true, false, false);
+            left.OutputEvent += (sender, args) => leftPressed = true;
             network.AddNeuron(left);
 
             OutputNeuron right = new OutputNeuron();
-            left.OutputEvent += (sender, args) => level.MovePlayer(false, true, false);
+            right.OutputEvent += (sender, args) => rightPressed = true;
             network.AddNeuron(right);
             
             OutputNeuron up = new OutputNeuron();
-            left.OutputEvent += (sender, args) => level.MovePlayer(false, false, true);
+            up.OutputEvent += (sender, args) => upPressed = true;
             network.AddNeuron(up);
         }
 
@@ -81,7 +84,7 @@ namespace Platformer_AI
 
             public bool FitsNeuron(InputNeuron neuron)
             {
-                if (neuron == null || !(neuron.GetType().IsSubclassOf(typeof(InputNeuron)) || neuron.GetType() == typeof(InputNeuron)))
+                if (neuron == null || !(neuron.IsInput))
                 {
                     return false;
                 }
@@ -116,9 +119,20 @@ namespace Platformer_AI
 
         private void bnAdvance_Click(object sender, EventArgs e)
         {
+            Advance();
+            network.MutateNetwork();
+            while (!leftPressed && !rightPressed && !upPressed)
+            {
+                Advance();
+                network.MutateNetwork();
+            }
+        }
+
+        private void Advance()
+        {
             List<LevelObservation> obs = new List<LevelObservation>();
 
-            for (int x = leftCameraBound; x < leftCameraBound + width; x++ )
+            for (int x = leftCameraBound; x < leftCameraBound + width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
@@ -130,8 +144,14 @@ namespace Platformer_AI
                 }
             }
 
+            leftPressed = false;
+            rightPressed = false;
+            upPressed = false;
+
             network.ApplyObservations(obs.ToArray());
             network.FireOutputs();
+
+            level.MovePlayer(leftPressed, rightPressed, upPressed);
         }
     }
 }

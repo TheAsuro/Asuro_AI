@@ -59,19 +59,19 @@ namespace Platformer_AI
 
         public void MovePlayer(bool left, bool right, bool up)
         {
-            bool moveRight = right && !left && !IsBlockAt(player.Position + new GamePosition(1, 0));
-            bool moveLeft = left && !right && !IsBlockAt(player.Position + new GamePosition(-1, 0));
-            bool moveUp = up && !IsBlockAt(player.Position + new GamePosition(0, 1)) && IsBlockAt(player.Position + new GamePosition(0, -1));
+            bool moveUp = up;
             bool moveDown = !IsBlockAt(player.Position + new GamePosition(0, -1));
+            bool moveRight = right && !left;
+            bool moveLeft = left && !right;
 
-            if (moveRight)
-                player.Position += new GamePosition(1, 0);
-            if (moveLeft)
-                player.Position += new GamePosition(-1, 0);
-            if (moveUp)
+            if (moveUp && !IsBlockAt(player.Position + new GamePosition(0, 1)))
                 player.Position += new GamePosition(0, 1);
             if (moveDown)
                 player.Position += new GamePosition(0, -1);
+            if (moveRight && !IsBlockAt(player.Position + new GamePosition(1, 0)))
+                player.Position += new GamePosition(1, 0);
+            if (moveLeft && !IsBlockAt(player.Position + new GamePosition(-1, 0)))
+                player.Position += new GamePosition(-1, 0);
         }
 
         private bool IsBlockAt(GamePosition pos)

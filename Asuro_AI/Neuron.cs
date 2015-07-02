@@ -55,6 +55,16 @@ namespace Asuro_AI
 
             return ((float)activeInputs) / ((float)inputs.Count) >= barrier;
         }
+
+        public bool IsInput
+        {
+            get { return this.GetType() == typeof(InputNeuron) || this.GetType().IsSubclassOf(typeof(InputNeuron)); }
+        }
+
+        public bool IsOutput
+        {
+            get { return this.GetType() == typeof(OutputNeuron) || this.GetType().IsSubclassOf(typeof(OutputNeuron)); }
+        }
     }
 
     public class InputNeuron : Neuron

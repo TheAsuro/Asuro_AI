@@ -28,6 +28,11 @@ namespace Asuro_AI
             rules.AddNeuron(newNeuron);
         }
 
+        private void RemoveNeuron(Neuron neuron)
+        {
+            rules.RemoveNeuron(neuron);
+        }
+
         public void MutateNetwork()
         {
             // Do a random number of mutations
@@ -51,15 +56,15 @@ namespace Asuro_AI
         {
             int type = rng.Next(0, 100);
 
-            if (type > 95)
+            if (type > 70)
             {
                 AddRandomNeuron();
             }
-            else if (type > 45)
+            else if (type > 50)
             {
                 RemoveRandomNeuron();
             }
-            else if (type > 25)
+            else if (type > 20)
             {
                 CreateRandomConnection();
             }
@@ -111,9 +116,9 @@ namespace Asuro_AI
         {
             Neuron n = GetRandomNeuron();
             
-            if (n != null)
+            if (n != null && !n.IsOutput)
             {
-                
+                RemoveNeuron(n);
             }
             else
             {
@@ -149,6 +154,10 @@ namespace Asuro_AI
                     {
                         int connectionIndex = rng.Next(0, n.Inputs.Length - 1);
                         n.RemoveInputAt(connectionIndex);
+
+                        if (n.Inputs.Length == 0 && !n.IsOutput)
+                            RemoveNeuron(n);
+
                         foundNode = true;
                     }
 
@@ -226,11 +235,11 @@ namespace Asuro_AI
 
         public void AddNeuron(Neuron neuron)
         {
-            if (neuron.GetType() == typeof(InputNeuron) || neuron.GetType().IsSubclassOf(typeof(InputNeuron)))
+            if (neuron.IsInput)
             {
                 inputs.Add((InputNeuron)neuron);
             }
-            else if (neuron.GetType() == typeof(OutputNeuron) || neuron.GetType().IsSubclassOf(typeof(OutputNeuron)))
+            else if (neuron.IsOutput)
             {
                 outputs.Add((OutputNeuron)neuron);
             }
