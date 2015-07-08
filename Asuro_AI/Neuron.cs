@@ -8,10 +8,18 @@ namespace Asuro_AI
 {
     public class Neuron
     {
-        private static List<Neuron> checkedNeurons = new List<Neuron>();
+        private static int hitCount = 0;
+        public static int Hits { get { int val = hitCount; hitCount = 0; return val; } }
 
         private List<Neuron> inputs = new List<Neuron>();
         public Neuron[] Inputs { get { return inputs.ToArray(); } }
+
+        private bool isBlocked = false;
+        public bool Block
+        {
+            get { return isBlocked; }
+            set { isBlocked = value; }
+        }
 
         private float barrier = 0.1f;
 
@@ -35,23 +43,29 @@ namespace Asuro_AI
 
         protected bool IsActiveFromInput()
         {
+            hitCount++;
+
+            // Abort, active check went in a circle!
+            if (isBlocked)
+                return false;
+
             int activeInputs = 0;
 
             // Prevent endless cycling
-            checkedNeurons.Add(this);
+            isBlocked = true;
 
             // Get input status (recursive)
             inputs.ForEach(
                 (Neuron n) =>
                 {
-                    if (!checkedNeurons.Contains(n) && n.IsActive)
+                    if (n.IsActive)
                     {
                         activeInputs++;
                     }
                 });
 
             // Release the block, as this node could be accessed from another path
-            checkedNeurons.Remove(this);
+            //isBlocked = false;
 
             return ((float)activeInputs) / ((float)inputs.Count) >= barrier;
         }
@@ -96,6 +110,7 @@ namespace Asuro_AI
             {
                 OutputEvent(this, new EventArgs());
             }
+
         }
     }
 }

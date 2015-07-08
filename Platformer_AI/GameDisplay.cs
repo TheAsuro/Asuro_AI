@@ -24,7 +24,7 @@ namespace Platformer_AI
         private bool upPressed;
 
         private NeuralNetwork network;
-
+        
         public GameDisplay()
         {
             InitializeComponent();
@@ -120,12 +120,6 @@ namespace Platformer_AI
         private void bnAdvance_Click(object sender, EventArgs e)
         {
             Advance();
-            network.MutateNetwork();
-            while (!leftPressed && !rightPressed && !upPressed)
-            {
-                Advance();
-                network.MutateNetwork();
-            }
         }
 
         private void Advance()
@@ -152,6 +146,18 @@ namespace Platformer_AI
             network.FireOutputs();
 
             level.MovePlayer(leftPressed, rightPressed, upPressed);
+
+            MarkControlActive(pnlLeft, leftPressed);
+            MarkControlActive(pnlRight, rightPressed);
+            MarkControlActive(pnlUp, upPressed);
+        }
+
+        private void MarkControlActive(Control ctrl, bool active)
+        {
+            if (active)
+                ctrl.BackColor = Color.DarkGreen;
+            else
+                ctrl.BackColor = SystemColors.Control;
         }
     }
 }

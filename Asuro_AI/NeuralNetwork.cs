@@ -49,7 +49,7 @@ namespace Asuro_AI
                 foreach (Neuron connection in n.Inputs)
                     counter++;
 
-            Console.WriteLine("Neurons: " + rules.Neurons.Length + " (I:" + rules.Inputs.Length + " O:" + rules.Outputs.Length + ")\nConnections: " + counter + "\n-----");
+            Console.WriteLine("Neurons: " + rules.Neurons.Length + " (I:" + rules.Inputs.Length + " O:" + rules.Outputs.Length + ")\nConnections: " + counter + "\nHits: " + Neuron.Hits + "\n-----");
         }
 
         private void Mutate()
@@ -195,6 +195,8 @@ namespace Asuro_AI
         /// </summary>
         public void FireOutputs()
         {
+            rules.ResetBlock();
+
             foreach (OutputNeuron oNeuron in rules.Outputs)
             {
                 oNeuron.FireOutput();
@@ -261,6 +263,11 @@ namespace Asuro_AI
                 if (outputs.Contains(neuron))
                     outputs.Remove((OutputNeuron)neuron);
             }
+        }
+
+        public void ResetBlock()
+        {
+            allNeurons.ForEach((neuron) => neuron.Block = false);
         }
     }
 }

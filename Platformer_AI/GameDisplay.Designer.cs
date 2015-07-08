@@ -30,8 +30,16 @@
         {
             this.gamePanel = new System.Windows.Forms.Panel();
             this.bnMutate = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.bnAdvance = new System.Windows.Forms.Button();
+            this.pnlLeft = new System.Windows.Forms.Panel();
+            this.lblLeft = new System.Windows.Forms.Label();
+            this.pnlRight = new System.Windows.Forms.Panel();
+            this.lblRight = new System.Windows.Forms.Label();
+            this.pnlUp = new System.Windows.Forms.Panel();
+            this.lblUp = new System.Windows.Forms.Label();
+            this.pnlLeft.SuspendLayout();
+            this.pnlRight.SuspendLayout();
+            this.pnlUp.SuspendLayout();
             this.SuspendLayout();
             // 
             // gamePanel
@@ -52,15 +60,6 @@
             this.bnMutate.UseVisualStyleBackColor = true;
             this.bnMutate.Click += new System.EventHandler(this.bnMutate_Click);
             // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(356, 70);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(202, 180);
-            this.textBox1.TabIndex = 2;
-            // 
             // bnAdvance
             // 
             this.bnAdvance.Location = new System.Drawing.Point(356, 29);
@@ -72,13 +71,70 @@
             this.bnAdvance.UseVisualStyleBackColor = true;
             this.bnAdvance.Click += new System.EventHandler(this.bnAdvance_Click);
             // 
+            // pnlLeft
+            // 
+            this.pnlLeft.Controls.Add(this.lblLeft);
+            this.pnlLeft.Location = new System.Drawing.Point(356, 225);
+            this.pnlLeft.Name = "pnlLeft";
+            this.pnlLeft.Size = new System.Drawing.Size(25, 25);
+            this.pnlLeft.TabIndex = 4;
+            // 
+            // lblLeft
+            // 
+            this.lblLeft.AutoSize = true;
+            this.lblLeft.Font = new System.Drawing.Font("Arial", 11.25F);
+            this.lblLeft.Location = new System.Drawing.Point(3, 3);
+            this.lblLeft.Name = "lblLeft";
+            this.lblLeft.Size = new System.Drawing.Size(23, 17);
+            this.lblLeft.TabIndex = 0;
+            this.lblLeft.Text = "←";
+            // 
+            // pnlRight
+            // 
+            this.pnlRight.Controls.Add(this.lblRight);
+            this.pnlRight.Location = new System.Drawing.Point(418, 225);
+            this.pnlRight.Name = "pnlRight";
+            this.pnlRight.Size = new System.Drawing.Size(25, 25);
+            this.pnlRight.TabIndex = 5;
+            // 
+            // lblRight
+            // 
+            this.lblRight.AutoSize = true;
+            this.lblRight.Font = new System.Drawing.Font("Arial", 11.25F);
+            this.lblRight.Location = new System.Drawing.Point(3, 3);
+            this.lblRight.Name = "lblRight";
+            this.lblRight.Size = new System.Drawing.Size(23, 17);
+            this.lblRight.TabIndex = 0;
+            this.lblRight.Text = "→";
+            // 
+            // pnlUp
+            // 
+            this.pnlUp.Controls.Add(this.lblUp);
+            this.pnlUp.Location = new System.Drawing.Point(387, 191);
+            this.pnlUp.Name = "pnlUp";
+            this.pnlUp.Size = new System.Drawing.Size(25, 25);
+            this.pnlUp.TabIndex = 5;
+            // 
+            // lblUp
+            // 
+            this.lblUp.AutoSize = true;
+            this.lblUp.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblUp.Location = new System.Drawing.Point(5, 4);
+            this.lblUp.Margin = new System.Windows.Forms.Padding(4);
+            this.lblUp.Name = "lblUp";
+            this.lblUp.Size = new System.Drawing.Size(16, 17);
+            this.lblUp.TabIndex = 0;
+            this.lblUp.Text = "↑";
+            // 
             // GameDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(564, 252);
+            this.Controls.Add(this.pnlUp);
+            this.Controls.Add(this.pnlRight);
+            this.Controls.Add(this.pnlLeft);
             this.Controls.Add(this.bnAdvance);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.bnMutate);
             this.Controls.Add(this.gamePanel);
             this.DoubleBuffered = true;
@@ -87,8 +143,13 @@
             this.Name = "GameDisplay";
             this.Text = "sick gaem";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.GameDisplay_Paint);
+            this.pnlLeft.ResumeLayout(false);
+            this.pnlLeft.PerformLayout();
+            this.pnlRight.ResumeLayout(false);
+            this.pnlRight.PerformLayout();
+            this.pnlUp.ResumeLayout(false);
+            this.pnlUp.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -96,8 +157,13 @@
 
         private System.Windows.Forms.Panel gamePanel;
         private System.Windows.Forms.Button bnMutate;
-        private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button bnAdvance;
+        private System.Windows.Forms.Panel pnlLeft;
+        private System.Windows.Forms.Label lblLeft;
+        private System.Windows.Forms.Panel pnlRight;
+        private System.Windows.Forms.Label lblRight;
+        private System.Windows.Forms.Panel pnlUp;
+        private System.Windows.Forms.Label lblUp;
     }
 }
 
