@@ -119,10 +119,21 @@ namespace Platformer_AI
 
         private void bnAdvance_Click(object sender, EventArgs e)
         {
-            Advance();
+            network.MutateNetwork();
+            Task.Factory.StartNew(() =>
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    if (!Advance())
+                        break;
+
+                    this.Invoke(new Action(() => Update()));
+                    System.Threading.Thread.Sleep(100);
+                }
+            });
         }
 
-        private void Advance()
+        private bool Advance()
         {
             List<LevelObservation> obs = new List<LevelObservation>();
 
@@ -150,6 +161,10 @@ namespace Platformer_AI
             MarkControlActive(pnlLeft, leftPressed);
             MarkControlActive(pnlRight, rightPressed);
             MarkControlActive(pnlUp, upPressed);
+
+            if (level.PlayerPosition.Y < 0)
+                return false;
+            return true;
         }
 
         private void MarkControlActive(Control ctrl, bool active)
