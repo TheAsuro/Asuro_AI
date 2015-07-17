@@ -35,7 +35,7 @@ namespace Platformer_AI
             seed = levelSeed;
             length = levelLength;
             rnd = new Random(seed);
-            player = new Player(new GamePosition(0, 6));
+            ResetPlayer();
             CreateLevel();
         }
 
@@ -74,6 +74,11 @@ namespace Platformer_AI
                 player.Position += new GamePosition(-1, 0);
         }
 
+        public void ResetPlayer()
+        {
+            player = new Player(new GamePosition(0, 6));
+        }
+
         private bool IsBlockAt(GamePosition pos)
         {
             return Blocks.ContainsKey(pos);
@@ -81,6 +86,8 @@ namespace Platformer_AI
         
         public void Draw(Graphics target, int leftCameraBound, int screenWidth, int screenHeight, int blockWidth, int blockHeight)
         {
+            target.Clear(Color.Black);
+
             // Draw blocks
             for (int x = leftCameraBound; x < leftCameraBound + screenWidth; x++)
             {

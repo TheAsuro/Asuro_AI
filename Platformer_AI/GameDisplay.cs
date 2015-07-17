@@ -23,6 +23,8 @@ namespace Platformer_AI
         private bool rightPressed;
         private bool upPressed;
 
+        private bool running;
+
         private NeuralNetwork network;
         
         public GameDisplay()
@@ -31,8 +33,7 @@ namespace Platformer_AI
 
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
 
-            level = new Level(42);
-            network = new NeuralNetwork(42, () => GetRandomInputNeuron(), 1, 10);
+            InitializeLevelAndNetwork();
 
             OutputNeuron left = new OutputNeuron();
             left.OutputEvent += (sender, args) => leftPressed = true;
@@ -103,7 +104,6 @@ namespace Platformer_AI
 
         private void GameDisplay_Paint(object sender, PaintEventArgs e)
         {
-            
             Graphics dispGraphics = gamePanel.CreateGraphics();
             BufferedGraphics graphics = BufferedGraphicsManager.Current.Allocate(dispGraphics, gamePanel.Bounds);
 
@@ -119,19 +119,39 @@ namespace Platformer_AI
 
         private void bnAdvance_Click(object sender, EventArgs e)
         {
-            network.MutateNetwork();
             Task.Factory.StartNew(() =>
             {
-                for (int i = 0; i < 100; i++)
-                {
-                    if (!Advance())
-                        break;
+                tempCounter = 0;
+                tempX = 0;
 
-                    this.Invoke(new Action(() => Update()));
-                    System.Threading.Thread.Sleep(100);
+                for (int i = 0; i < 10000; i++)
+                {
+                    running = true;
+                    if (!Advance())
+                    {
+                        tempCounter = 0;
+                        tempX = 0;
+                        network.MutateNetwork();
+                        level.ResetPlayer();
+                    }
+
+                    // What have I done...
+                    if (!this.IsDisposed)
+                        this.Invoke(new Action(() => this.RaisePaintEvent(typeof(PaintEventHandler), new PaintEventArgs(gamePanel.CreateGraphics(), gamePanel.DisplayRectangle))));
                 }
+                running = false;
+                LogSafe("Finished");
             });
         }
+
+        private void LogSafe(string text)
+        {
+            if (!this.IsDisposed && !lbLog.IsDisposed)
+                this.Invoke(new Action(() => { lbLog.Items.Add(text); lbLog.SelectedIndex = lbLog.Items.Count - 1; }));
+        }
+
+        private int tempCounter = 0;
+        private int tempX = 0;
 
         private bool Advance()
         {
@@ -158,13 +178,34 @@ namespace Platformer_AI
 
             level.MovePlayer(leftPressed, rightPressed, upPressed);
 
+            if (level.PlayerPosition.X > tempX)
+                tempCounter = 0;
+            else
+                tempCounter++;
+
             MarkControlActive(pnlLeft, leftPressed);
             MarkControlActive(pnlRight, rightPressed);
             MarkControlActive(pnlUp, upPressed);
 
-            if (level.PlayerPosition.Y < 0)
+            if (tempCounter > 30)
+            {
+                LogSafe("Death by boredom, x-pos: " + level.PlayerPosition.X);
                 return false;
+            }
+
+            if (level.PlayerPosition.Y < 0)
+            {
+                LogSafe("Death by falling, x-pos: " + level.PlayerPosition.X);
+                return false;
+            }
+
             return true;
+        }
+
+        private void InitializeLevelAndNetwork()
+        {
+            level = new Level(42);
+            network = new NeuralNetwork(42, () => GetRandomInputNeuron(), 1, 10);
         }
 
         private void MarkControlActive(Control ctrl, bool active)

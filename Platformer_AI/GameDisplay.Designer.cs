@@ -37,6 +37,7 @@
             this.lblRight = new System.Windows.Forms.Label();
             this.pnlUp = new System.Windows.Forms.Panel();
             this.lblUp = new System.Windows.Forms.Label();
+            this.lbLog = new System.Windows.Forms.ListBox();
             this.pnlLeft.SuspendLayout();
             this.pnlRight.SuspendLayout();
             this.pnlUp.SuspendLayout();
@@ -126,11 +127,20 @@
             this.lblUp.TabIndex = 0;
             this.lblUp.Text = "↑";
             // 
+            // lbLog
+            // 
+            this.lbLog.FormattingEnabled = true;
+            this.lbLog.Location = new System.Drawing.Point(356, 58);
+            this.lbLog.Name = "lbLog";
+            this.lbLog.Size = new System.Drawing.Size(202, 121);
+            this.lbLog.TabIndex = 6;
+            // 
             // GameDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(564, 252);
+            this.Controls.Add(this.lbLog);
             this.Controls.Add(this.pnlUp);
             this.Controls.Add(this.pnlRight);
             this.Controls.Add(this.pnlLeft);
@@ -164,6 +174,7 @@
         private System.Windows.Forms.Label lblRight;
         private System.Windows.Forms.Panel pnlUp;
         private System.Windows.Forms.Label lblUp;
+        private System.Windows.Forms.ListBox lbLog;
     }
 }
 
